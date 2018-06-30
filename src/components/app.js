@@ -1,21 +1,22 @@
 angular.module('video-player')
-
-  .controller('app1.controller', function(){
-      this.videos = exampleVideoData;
-      this.currentVideo = exampleVideoData[0];
-      this.selectVideo = function(newCurrentVideo) {
-        console.log('this is ', this);
-        console.log('this.currentVideo is ', this.currentVideo);
-        console.log('newCurrentVideo is ', newCurrentVideo);
-        this.currentVideo = newCurrentVideo;
+  .component('app',{
+    controller: function(youTube) {
+      var thisApp = this;
+      thisApp.videos = exampleVideoData;
+      thisApp.currentVideo = exampleVideoData[0];
+      thisApp.result = '';
+      
+      thisApp.selectVideo = function(newCurrentVideo) {
+        thisApp.currentVideo = newCurrentVideo;
       };
-      this.searchResults = function() {
-        // q = this.result
-        // search()
+      
+      thisApp.searchResults = function(newResult) {
+        thisApp.result = newResult;
+        thisApp.videos = youTube.searchYoutube(newResult);
+        thisApp.currentVideo = thisApp.videos[0];
       };
-    })
-
-  .component('app', {
-    controller: 'app1.controller',
+    },
     templateUrl: 'src/templates/app.html'
-  });
+  })
+  
+  
